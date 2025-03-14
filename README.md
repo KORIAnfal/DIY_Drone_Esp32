@@ -11,28 +11,41 @@ This project is a **custom-built quadcopter drone** using the **ESP32 microcontr
 - **Motors**: 4x Brushless Motors
 - **ESCs (Electronic Speed Controllers)**: 4x ESCs to regulate motor speed
 - **Power Source**: LiPo Battery
-- **Receiver**: 2.4GHz Radio Receiver (for remote control)
+- **2.4GHz Radio Receiver** (PWM output to ESP32)  
+- **2.4GHz Transmitter** (RC remote controller)  
 
 ---
 
-## Wiring Schematic
+## Wiring Schematic  
 
-### ESP32 to MPU6050 (I2C Communication)
-| ESP32 GPIO | MPU6050 |
-|------------|---------|
-| SDA (GPIO 21) | SDA |
-| SCL (GPIO 22) | SCL |
-| GND | GND |
-| VCC | 3.3V or 5V (depending on module) |
+### MPU6050 Wiring (I2C)  
 
-### ESC to ESP32 (PWM Signal Control)
-| ESC | ESP32 GPIO |
-|-----|------------|
-| ESC1 (Motor 1) | GPIO 25 |
-| ESC2 (Motor 2) | GPIO 26 |
-| ESC3 (Motor 3) | GPIO 27 |
-| ESC4 (Motor 4) | GPIO 14 |
+| MPU6050 Pin | ESP32 Pin |
+|------------|----------|
+| **VCC** | 3.3V |
+| **GND** | GND |
+| **SDA** | GPIO 21 |
+| **SCL** | GPIO 22 |
 
-### Battery & Power Distribution
-- **LiPo Battery** → **Power Distribution Board** → **ESCs** → **Motors**
+### RC Receiver Wiring  
+
+| RC Receiver Pin | ESP32 Pin / Power Source |
+|----------------|-------------------------|
+| **VCC (5V)** | From one ESC BEC |
+| **GND** | ESP32 GND |
+| **Channel 1 (Throttle)** | GPIO 34 |
+| **Channel 2 (Roll)** | GPIO 35 |
+| **Channel 3 (Pitch)** | GPIO 32 |
+| **Channel 4 (Yaw)** | GPIO 23 |
+
+### ESC Wiring  
+
+| ESC | ESP32 Pin | Motor Position |
+|-----|----------|----------------|
+| **ESC1** | GPIO 25 | Motor 1 - Front Left |
+| **ESC2** | GPIO 26 | Motor 2 - Front Right |
+| **ESC3** | GPIO 27 | Motor 3 - Back Left |
+| **ESC4** | GPIO 14 | Motor 4 - Back Right |
+| **ESC 5V BEC** | ESP32 VCC (one ESC only!) | Power Supply |
+| **ESC GND** | ESP32 GND (at least one ESC) | Ground Connection |
 
